@@ -1,0 +1,307 @@
+{{-- **********Start Exchange Map By Order Statics --}}
+
+{{--  Card1  --}}
+
+<div class="col-lg-4 col-md-4 col-sm-6 mt-4">
+<div class="card-container d-flex flex-column h-100">
+<div class="card" >
+<div class="card-header">
+  <h5 class="mb-0">
+      {{translate('order_status_statistics')}}
+  </h5>
+</div>
+<!-- Body -->
+<div class="card-body">
+  <!-- Bar Chart -->
+  <div class="mt-2">
+      <div>
+          <div class="position-relative pie-chart">
+              <div id="dognut-pie"></div>
+              <!-- Total Orders -->
+              <div class="total--orders">
+                  <h3>{{$donut['pending'] + $donut['ongoing'] + $donut['delivered']+ $donut['canceled']+ $donut['returned']+ $donut['failed']}} </h3>
+                  <span>{{ translate('orders') }}</span>
+              </div>
+              <!-- Total Orders -->
+          </div>
+          <div class="apex-legends">
+              <div class="before-bg-pending">
+                  <span>{{ translate('pending') }} ({{$donut['pending']}})</span>
+              </div>
+              <div class="before-bg-ongoing">
+                  <span>{{ translate('ongoing') }} ({{$donut['ongoing']}})</span>
+              </div>
+              <div class="before-bg-delivered">
+                  <span>{{ translate('delivered') }} ({{$donut['delivered']}})</span>
+              </div>
+              <div class="before-bg-17202A">
+                  <span>{{ translate('canceled') }} ({{$donut['canceled']}})</span>
+              </div>
+              <div class="before-bg-21618C">
+                  <span>{{ translate('returned') }} ({{$donut['returned']}})</span>
+              </div>
+              <div class="before-bg-27AE60">
+                  <span>{{ translate('failed_to_deliver') }} ({{$donut['failed']}})</span>
+              </div>
+          </div>
+      </div>
+  </div>
+  <!-- End Bar Chart -->
+</div>
+
+</div>
+</div>
+</div>
+{{-- ********** End Exchange Map By Order Statics --}}
+
+
+{{--  Card2  --}}
+<div class="col-lg-4 col-md-4 col-sm-6 mt-4">
+<div class="card-container d-flex flex-column">
+<div class="card" >
+<div class="card-header ">
+  <h5 class="mb-0"> {{translate('Payment Type')}}</h5>
+</div>
+<!-- Body -->
+<div class="card-body">
+  <!-- Bar Chart -->
+  <div class="mt-2">
+      <div>
+          <div class="position-relative pie-chart">
+              <div id="dognut-pie2"></div>
+              <!-- Total Orders -->
+              <div class="total--orders">
+                  <h3>{{$payment_donut['wallet_payment'] + $payment_donut['cash_on_delivery']}} </h3>
+                  <span>{{translate('Payment Type')}}</span>
+              </div>
+              <!-- Total Orders -->
+          </div>
+          <div class="apex-legends">
+              <div class="before-bg-ongoing">
+                  <span>{{ translate('wallet') }} ({{$payment_donut['wallet_payment']}})</span>
+              </div>
+              <div class="before-bg-pending">
+                  <span>{{translate('cash_on_delivery')}} ({{$payment_donut['cash_on_delivery']}})</span>
+              </div>
+
+          </div>
+      </div>
+  </div>
+  <!-- End Bar Chart -->
+</div>
+<!-- End Body -->
+</div>
+</div>
+</div>
+{{--  Card3  --}}
+<div class="col-lg-4 col-md-4 col-sm-6 mt-4">
+<div class="card-container d-flex flex-column h-100">
+<div class="card" >
+<div class="card-header">
+  <h5 class="mb-0">{{translate('Delivery/PickUp')}}</h5>
+</div>
+<!-- Body -->
+<div class="card-body">
+  <!-- Bar Chart -->
+  <div class="mt-2">
+      <div>
+          <div class="position-relative pie-chart">
+              <div id="dognut-pie3"></div>
+              <!-- Total Orders -->
+              <div class="total--orders">
+                  <h3>{{$orderType_donut['delivery'] + $orderType_donut['pickup']}} </h3>
+                  <span>{{ translate('Order_Type') }}</span>
+              </div>
+              <!-- Total Orders -->
+          </div>
+          <div class="apex-legends">
+              <div class="before-bg-pending">
+                  <span>{{ translate('delivery') }} ({{$orderType_donut['delivery']}})</span>
+              </div>
+              <div class="before-bg-ongoing">
+                  <span>{{ translate('self_pickup') }} ({{$orderType_donut['pickup']}})</span>
+              </div>
+          </div>
+      </div>
+  </div>
+  <!-- End Bar Chart -->
+</div>
+<!-- End Body -->
+</div>
+</div>
+</div>
+
+</div>
+
+{{--  *******************************End Here.. Newly--For Extra Cards*****************************  --}}
+
+
+
+
+
+--}}
+
+
+
+/* div.col-lg-4.col-md-4.col-sm-6.mb-3.homeD3{
+    padding: 0px 19px 0px 19px;
+    margin: 0px 0px 0px 0px;
+
+} */
+div.home--card-body{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 5px 4px 7px 14px;
+}
+div.home--card-text{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 6px 0px 6px 0px;
+    margin: 6px 0px 6px 0px;
+}
+img.home--card-img
+{
+    width: 25px;
+}
+h3.home--card-title
+{
+    color: #ff6767;
+    padding: 9px 0px 0px 0px;
+}
+h5.home--card-subtitle{
+    padding: 0px 0px 0px 0px;
+    margin: -7px 0px 0px 0px;
+}
+/* -----------HomeDiv 3 For Carusal Css  */
+
+span.carousel-control-prev-icon{
+    background-color: #ff6767;
+    border: none;
+    border-radius: 50%;
+    padding: 15px 15px;
+    margin: 1px 1px;
+    background-size: 13px;
+}
+a.carousel-control-prev{
+    padding: 0px 46px 27px 0px;
+}
+span.carousel-control-next-icon{
+    background-color: #ff6767;
+    border: none;
+    border-radius: 50%;
+    padding: 15px 15px;
+    margin: 1px 1px;
+    background-size: 13px;
+}
+a.carousel-control-next{
+    padding: 0px 0px 40px 51px;
+}
+@media only screen
+and (min-width: 1370px)
+and (max-width: 1605px){
+    span.carousel-control-prev-icon{
+        background-color: #ff6767;
+        border: none;
+        border-radius: 50%;
+        padding: 15px 15px;
+        margin: 1px 1px;
+        background-size: 13px;
+    }
+    a.carousel-control-prev{
+        padding: 0px 46px 27px 0px;
+    }
+    span.carousel-control-next-icon{
+        background-color: #ff6767;
+        border: none;
+        border-radius: 50%;
+        padding: 15px 15px;
+        margin: 1px 1px;
+        background-size: 13px;
+    }
+    a.carousel-control-next{
+        padding: 0px 0px 40px 51px;
+    }
+}
+ @media only screen
+and (min-width: 1030px)
+and (max-width: 1369px){
+    span.carousel-control-prev-icon {
+    background-color: #ff6767;
+    border: none;
+    border-radius: 50%;
+    padding: 14px 13px;
+    margin: 1px 1px;
+    background-size: 12px;
+}
+    a.carousel-control-prev {
+        padding: 0px 35px 27px 0px;
+    }
+    span.carousel-control-next-icon {
+    background-color: #ff6767;
+    border: none;
+    border-radius: 50%;
+    padding: 14px 13px;
+    margin: 1px 1px;
+    background-size: 12px;
+}
+    a.carousel-control-next {
+        padding: 0px 0px 39px 42px;
+    }
+}
+
+
+@media only screen
+and (orientation : landscape)
+and (-webkit-min-device-pixel-ratio: 1)
+and (min-device-width : 768px)
+and (max-device-width : 1029px)
+{
+    /* .carousel-inner .carousel-item {
+        display: flex;
+      }
+      .carousel-inner .carousel-item div.row-mb-4.mx-4 {
+        flex: 1;
+        margin-right: 15px;
+      }
+      .carousel-inner .carousel-item div.row-mb-4.mx-4 :last-child {
+        margin-right: 0;
+      } */
+
+    /* .carousel-inner{
+        display:flex;
+
+
+    }
+    .carousel-item{
+        display: block;
+        margin-right: 0;
+        flex: 0 0 calc(100%/2);
+    } */
+    span.carousel-control-prev-icon {
+        background-color: #ff6767;
+        border: none;
+        border-radius: 50%;
+        padding: 11px 11px;
+        margin: 1px 1px;
+        background-size: 12px;
+    }
+        a.carousel-control-prev {
+            padding: 0px 24px 27px 0px;
+        }
+        span.carousel-control-next-icon {
+        background-color: #ff6767;
+        border: none;
+        border-radius: 50%;
+        padding: 11px 11px;
+        margin: 1px 1px;
+        background-size: 12px;
+    }
+        a.carousel-control-next {
+            padding: 0px 0px 37px 32px;
+        }
+    }
+
+

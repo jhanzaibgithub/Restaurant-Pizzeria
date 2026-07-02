@@ -1,0 +1,14 @@
+.li_hr{
+    margin-top:-0.19rem
+}
+.li_hr-top{
+    margin-top:0.5rem
+}
+.li_hr-sub
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 10px;
+}
+

@@ -1,0 +1,9 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "com.app.dcodaxfood",
+    "sha256_cert_fingerprints":
+    ["04:6D:E8:69:CA:9D:4C:03:E9:82:CD:93:2F:15:7C:EF:F8:63:4E:39:87:A8:4C:1F:B9:76:2F:E9:41:CF:00:89"]
+  }
+}]
