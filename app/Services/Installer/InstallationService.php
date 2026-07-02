@@ -274,6 +274,36 @@ class InstallationService
             'delivery_charge' => '0',
             'push_notification_key' => '',
             'map_api_server_key' => '',
+            'cash_on_delivery' => json_encode([
+                'status' => 0,
+            ]),
+            'digital_payment' => json_encode([
+                'status' => 0,
+            ]),
+            'payconiq_payment' => json_encode([
+                'status' => 0,
+                'token' => '',
+            ]),
+            'ssl_commerz_payment' => json_encode([
+                'status' => 0,
+                'store_id' => '',
+                'store_password' => '',
+            ]),
+            'razor_pay' => json_encode([
+                'status' => 0,
+                'razor_key' => '',
+                'razor_secret' => '',
+            ]),
+            'paypal' => json_encode([
+                'status' => 0,
+                'paypal_client_id' => '',
+                'paypal_secret' => '',
+            ]),
+            'stripe' => json_encode([
+                'status' => 0,
+                'published_key' => '',
+                'api_key' => '',
+            ]),
             'language' => json_encode([[
                 'id' => 1,
                 'name' => 'English',

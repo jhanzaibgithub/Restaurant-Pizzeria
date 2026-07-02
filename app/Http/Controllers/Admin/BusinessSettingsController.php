@@ -304,7 +304,7 @@ class BusinessSettingsController extends Controller
             'paypal',
             'stripe',
         ] as $key) {
-            $paymentConfigs[$key] = Helpers::get_business_settings($key);
+            $paymentConfigs[$key] = $this->defaultPaymentConfig($key, Helpers::get_business_settings($key));
         }
 
         return view('admin-views.business-settings.payment-index', compact('paymentConfigs'));
@@ -317,6 +317,36 @@ class BusinessSettingsController extends Controller
      */
     public function payment_update(Request $request, $name): RedirectResponse
     {
+        $adminPaymentMethods = [
+            'cash_on_delivery',
+            'digital_payment',
+            'payconiq_payment',
+            'ssl_commerz_payment',
+            'razor_pay',
+            'paypal',
+            'stripe',
+        ];
+
+        if (in_array($name, $adminPaymentMethods, true)) {
+            $config = $this->defaultPaymentConfig($name);
+            $config['status'] = $request->has('status') ? 1 : 0;
+
+            foreach (array_keys($config) as $field) {
+                if ($field !== 'status') {
+                    $config[$field] = $request->input($field, $config[$field]);
+                }
+            }
+
+            $this->business_setting->updateOrInsert(['key' => $name], [
+                'key' => $name,
+                'value' => json_encode($config),
+                'updated_at' => now(),
+            ]);
+
+            Toastr::success(translate('payment settings updated!'));
+            return back();
+        }
+
         if ($name == 'cash_on_delivery') {
             $payment = $this->business_setting->where('key', 'cash_on_delivery')->first();
             if (isset($payment) == false) {
@@ -591,6 +621,44 @@ class BusinessSettingsController extends Controller
 
         Toastr::success(translate('payment settings updated!'));
         return back();
+    }
+
+    private function defaultPaymentConfig(string $key, $config = null): array
+    {
+        $defaults = [
+            'cash_on_delivery' => [
+                'status' => 0,
+            ],
+            'digital_payment' => [
+                'status' => 0,
+            ],
+            'payconiq_payment' => [
+                'status' => 0,
+                'token' => '',
+            ],
+            'ssl_commerz_payment' => [
+                'status' => 0,
+                'store_id' => '',
+                'store_password' => '',
+            ],
+            'razor_pay' => [
+                'status' => 0,
+                'razor_key' => '',
+                'razor_secret' => '',
+            ],
+            'paypal' => [
+                'status' => 0,
+                'paypal_client_id' => '',
+                'paypal_secret' => '',
+            ],
+            'stripe' => [
+                'status' => 0,
+                'published_key' => '',
+                'api_key' => '',
+            ],
+        ];
+
+        return array_merge($defaults[$key] ?? ['status' => 0], is_array($config) ? $config : []);
     }
 
     /**
@@ -1242,8 +1310,8 @@ class BusinessSettingsController extends Controller
     public function app_setting_index(): Renderable
     {
         $appSettings = [
-            'play_store_config' => Helpers::get_business_settings('play_store_config'),
-            'app_store_config' => Helpers::get_business_settings('app_store_config'),
+            'play_store_config' => $this->defaultAppStoreConfig(Helpers::get_business_settings('play_store_config')),
+            'app_store_config' => $this->defaultAppStoreConfig(Helpers::get_business_settings('app_store_config')),
         ];
 
         return view('admin-views.business-settings.app-setting-index', compact('appSettings'));
@@ -1258,9 +1326,9 @@ class BusinessSettingsController extends Controller
         if ($request->platform == 'android') {
             $this->business_setting->updateOrInsert(['key' => 'play_store_config'], [
                 'value' => json_encode([
-                    'status' => $request['play_store_status'],
-                    'link' => $request['play_store_link'],
-                    'min_version' => $request['android_min_version'],
+                    'status' => $request->input('play_store_status', 0),
+                    'link' => $request->input('play_store_link', ''),
+                    'min_version' => $request->input('android_min_version', 0),
 
                 ]),
             ]);
@@ -1272,9 +1340,9 @@ class BusinessSettingsController extends Controller
         if ($request->platform == 'ios') {
             $this->business_setting->updateOrInsert(['key' => 'app_store_config'], [
                 'value' => json_encode([
-                    'status' => $request['app_store_status'],
-                    'link' => $request['app_store_link'],
-                    'min_version' => $request['ios_min_version'],
+                    'status' => $request->input('app_store_status', 0),
+                    'link' => $request->input('app_store_link', ''),
+                    'min_version' => $request->input('ios_min_version', 0),
                 ]),
             ]);
             Toastr::success(translate('Updated Successfully for IOS'));
@@ -1582,7 +1650,11 @@ class BusinessSettingsController extends Controller
      */
     public function chat_index(): Renderable
     {
-        $whatsappConfig = Helpers::get_business_settings('whatsapp');
+        $config = Helpers::get_business_settings('whatsapp');
+        $whatsappConfig = array_merge([
+            'status' => 0,
+            'number' => '',
+        ], is_array($config) ? $config : []);
 
         return view('admin-views.business-settings.chat-index', compact('whatsappConfig'));
     }
@@ -1597,8 +1669,8 @@ class BusinessSettingsController extends Controller
         if ($name == 'whatsapp') {
             $this->business_setting->updateOrInsert(['key' => 'whatsapp'], [
                 'value' => json_encode([
-                    'status' => $request['status'] == 'on' ? 1 : 0,
-                    'number' => $request['number'],
+                    'status' => $request->has('status') ? 1 : 0,
+                    'number' => $request->input('number', ''),
                 ]),
             ]);
         }
@@ -1708,6 +1780,15 @@ class BusinessSettingsController extends Controller
             'venue_id' => '',
             'merchant_id' => '',
             'token' => '',
+        ], is_array($config) ? $config : []);
+    }
+
+    private function defaultAppStoreConfig($config): array
+    {
+        return array_merge([
+            'status' => 0,
+            'link' => '',
+            'min_version' => 0,
         ], is_array($config) ? $config : []);
     }
 

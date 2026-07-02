@@ -87,7 +87,7 @@
                             <div class="d-flex justify-content-between">
                                 <h5 class="text-uppercase mb-4">{{translate('payconiq')}}</h5>
                                 <label class="switcher">
-                                    <input class="switcher_input" name="status" type="checkbox" {{$config['status'] == 1? 'checked' : ''}}>
+                                    <input class="switcher_input" name="status" type="checkbox" {{($config['status'] ?? 0) == 1? 'checked' : ''}}>
                                     <span class="switcher_control"></span>
                                 </label>
                             </div>
@@ -101,7 +101,7 @@
                                 <div class="form-group">
                                     <label>{{translate('Api Token')}} </label><br>
                                     <input type="text" class="form-control" name="token"
-                                           value="{{env('APP_MODE')!='demo'?$config['token']:''}}">
+                                           value="{{env('APP_MODE')!='demo'?($config['token'] ?? ''):''}}">
                                 </div>
                                 <div class="btn--container">
                                     <button type="{{env('APP_MODE')!='demo'?'submit':'button'}}"
@@ -125,7 +125,7 @@
                             <div class="card-header d-flex justify-content-between align-items-center">
                                     <h4 class="text-uppercase">{{translate('sslcommerz')}}</h4>
                                     <label class="switcher ">
-                                        <input class="switcher_input" name="status" type="checkbox" {{$config['status'] == 1? 'checked' : ''}}>
+                                        <input class="switcher_input" name="status" type="checkbox" {{($config['status'] ?? 0) == 1? 'checked' : ''}}>
                                         <span class="switcher_control"></span>
                                     </label>
                             </div>
@@ -139,12 +139,12 @@
                                         <div class="form-group">
                                             <label>{{translate('store ID')}} </label><br>
                                             <input type="text" class="form-control" name="store_id"
-                                                value="{{env('APP_MODE')!='demo'?$config['store_id']:''}}">
+                                                value="{{env('APP_MODE')!='demo'?($config['store_id'] ?? ''):''}}">
                                         </div>
                                         <div class="form-group">
                                             <label>{{translate('store Password')}}</label><br>
                                             <input type="text" class="form-control" name="store_password"
-                                                value="{{env('APP_MODE')!='demo'?$config['store_password']:''}}">
+                                                value="{{env('APP_MODE')!='demo'?($config['store_password'] ?? ''):''}}">
                                         </div>
 
                                         <div class="d-flex justify-content-center align-items-center gap-3">
@@ -171,7 +171,7 @@
                         <div class="card-header d-flex justify-content-between align-items-center">
                                 <h4 class="text-uppercase">{{translate('razorpay')}}</h4>
                                 <label class="switcher">
-                                    <input class="switcher_input" name="status" type="checkbox" {{$config['status'] == 1? 'checked' : ''}}>
+                                    <input class="switcher_input" name="status" type="checkbox" {{($config['status'] ?? 0) == 1? 'checked' : ''}}>
                                     <span class="switcher_control"></span>
                                 </label>
                         </div>
@@ -186,12 +186,12 @@
                                 <div class="form-group">
                                     <label>{{translate('razorkey')}}</label>
                                     <input type="text" class="form-control" name="razor_key"
-                                           value="{{env('APP_MODE')!='demo'?$config['razor_key']:''}}">
+                                           value="{{env('APP_MODE')!='demo'?($config['razor_key'] ?? ''):''}}">
                                 </div>
                                 <div class="form-group">
                                     <label>{{translate('razorsecret')}}</label>
                                     <input type="text" class="form-control" name="razor_secret"
-                                           value="{{env('APP_MODE')!='demo'?$config['razor_secret']:''}}">
+                                           value="{{env('APP_MODE')!='demo'?($config['razor_secret'] ?? ''):''}}">
                                 </div>
 
                                 <div class="d-flex justify-content-center align-items-center gap-3">
@@ -217,7 +217,7 @@
                     <div class="card-header d-flex justify-content-between align-items-center">
                             <h4 class="text-uppercase">{{translate('paypal')}}</h4>
                             <label class="switcher">
-                                <input class="switcher_input" name="status" type="checkbox" {{$config['status'] == 1? 'checked' : ''}}>
+                                <input class="switcher_input" name="status" type="checkbox" {{($config['status'] ?? 0) == 1? 'checked' : ''}}>
                                 <span class="switcher_control"></span>
                             </label>
                     </div>
@@ -232,12 +232,12 @@
                                 <div class="form-group">
                                     <label>{{translate('paypal')}} {{translate('client')}} {{translate('id')}}</label>
                                     <input type="text" class="form-control" name="paypal_client_id"
-                                           value="{{env('APP_MODE')!='demo'?$config['paypal_client_id']:''}}">
+                                           value="{{env('APP_MODE')!='demo'?($config['paypal_client_id'] ?? ''):''}}">
                                 </div>
                                 <div class="form-group">
                                     <label>{{translate('paypal')}} {{translate('secret')}}</label>
                                     <input type="text" class="form-control" name="paypal_secret"
-                                           value="{{env('APP_MODE')!='demo'?$config['paypal_secret']:''}}">
+                                           value="{{env('APP_MODE')!='demo'?($config['paypal_secret'] ?? ''):''}}">
                                 </div>
 
                                 <div class="d-flex justify-content-center align-items-center gap-3">
@@ -265,7 +265,7 @@
                     <div class="card-header d-flex justify-content-between align-items-center">
                             <h4 class="text-uppercase">{{translate('stripe')}}</h4>
                             <label class="switcher">
-                                <input class="switcher_input" name="status" type="checkbox" {{$config['status'] == 1? 'checked' : ''}}>
+                                <input class="switcher_input" name="status" type="checkbox" {{($config['status'] ?? 0) == 1? 'checked' : ''}}>
                                 <span class="switcher_control"></span>
                             </label>
                     </div>
@@ -279,13 +279,13 @@
                                 <div class="form-group">
                                     <label>{{translate('published')}} {{translate('key')}}</label>
                                     <input type="text" class="form-control" name="published_key"
-                                           value="{{env('APP_MODE')!='demo'?$config['published_key']:''}}">
+                                           value="{{env('APP_MODE')!='demo'?($config['published_key'] ?? ''):''}}">
                                 </div>
 
                                 <div class="form-group">
                                     <label>{{translate('api')}} {{translate('key')}}</label>
                                     <input type="text" class="form-control" name="api_key"
-                                           value="{{env('APP_MODE')!='demo'?$config['api_key']:''}}">
+                                           value="{{env('APP_MODE')!='demo'?($config['api_key'] ?? ''):''}}">
                                 </div>
 
 

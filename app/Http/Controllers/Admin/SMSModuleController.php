@@ -24,8 +24,8 @@ class SMSModuleController extends Controller
     public function sms_index(): Renderable
     {
         $smsConfigs = [
-            'twilio_sms' => Helpers::get_business_settings('twilio_sms'),
-            'nexmo_sms' => Helpers::get_business_settings('nexmo_sms'),
+            'twilio_sms' => $this->defaultSmsConfig('twilio_sms', Helpers::get_business_settings('twilio_sms')),
+            'nexmo_sms' => $this->defaultSmsConfig('nexmo_sms', Helpers::get_business_settings('nexmo_sms')),
         ];
 
         return view('admin-views.business-settings.sms-index', compact('smsConfigs'));
@@ -42,12 +42,12 @@ class SMSModuleController extends Controller
             $this->business_setting->updateOrInsert(['key' => 'twilio_sms'], [
                 'key' => 'twilio_sms',
                 'value' => json_encode([
-                    'status' => $request['status'],
-                    'sid' => $request['sid'],
-                    'messaging_service_sid' => $request['messaging_service_sid'],
-                    'token' => $request['token'],
-                    'from' => $request['from'],
-                    'otp_template' => $request['otp_template'],
+                    'status' => $request->input('status', 0),
+                    'sid' => $request->input('sid', ''),
+                    'messaging_service_sid' => $request->input('messaging_service_sid', ''),
+                    'token' => $request->input('token', ''),
+                    'from' => $request->input('from', ''),
+                    'otp_template' => $request->input('otp_template', ''),
                 ]),
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -57,14 +57,14 @@ class SMSModuleController extends Controller
             $this->business_setting->updateOrInsert(['key' => 'nexmo_sms'], [
                 'key' => 'nexmo_sms',
                 'value' => json_encode([
-                    'status' => $request['status'],
-                    'api_key' => $request['api_key'],
-                    'api_secret' => $request['api_secret'],
+                    'status' => $request->input('status', 0),
+                    'api_key' => $request->input('api_key', ''),
+                    'api_secret' => $request->input('api_secret', ''),
                     'signature_secret' => '',
                     'private_key' => '',
                     'application_id' => '',
-                    'from' => $request['from'],
-                    'otp_template' => $request['otp_template']
+                    'from' => $request->input('from', ''),
+                    'otp_template' => $request->input('otp_template', '')
                 ]),
                 'created_at' => now(),
                 'updated_at' => now(),
@@ -109,9 +109,9 @@ class SMSModuleController extends Controller
             ]);
         }
 
-        if ($request['status'] == 1) {
-            $config = Helpers::get_business_settings('twilio_sms');
-            if (isset($config) && $module != 'twilio_sms') {
+        if ($request->input('status', 0) == 1) {
+            $config = $this->defaultSmsConfig('twilio_sms', Helpers::get_business_settings('twilio_sms'));
+            if ($module != 'twilio_sms') {
                 $this->business_setting->updateOrInsert(['key' => 'twilio_sms'], [
                     'key' => 'twilio_sms',
                     'value' => json_encode([
@@ -126,8 +126,8 @@ class SMSModuleController extends Controller
                 ]);
             }
 
-            $config = Helpers::get_business_settings('nexmo_sms');
-            if (isset($config) && $module != 'nexmo_sms') {
+            $config = $this->defaultSmsConfig('nexmo_sms', Helpers::get_business_settings('nexmo_sms'));
+            if ($module != 'nexmo_sms') {
                 $this->business_setting->updateOrInsert(['key' => 'nexmo_sms'], [
                     'key' => 'nexmo_sms',
                     'value' => json_encode([
@@ -191,5 +191,31 @@ class SMSModuleController extends Controller
         }
 
         return back();
+    }
+
+    private function defaultSmsConfig(string $module, $config = null): array
+    {
+        $defaults = [
+            'twilio_sms' => [
+                'status' => 0,
+                'sid' => '',
+                'messaging_service_sid' => '',
+                'token' => '',
+                'from' => '',
+                'otp_template' => '',
+            ],
+            'nexmo_sms' => [
+                'status' => 0,
+                'api_key' => '',
+                'api_secret' => '',
+                'signature_secret' => '',
+                'private_key' => '',
+                'application_id' => '',
+                'from' => '',
+                'otp_template' => '',
+            ],
+        ];
+
+        return array_merge($defaults[$module] ?? ['status' => 0], is_array($config) ? $config : []);
     }
 }
