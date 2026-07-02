@@ -191,23 +191,6 @@
                                 </a>
                         </li>
                     </ul>
-                    <h2>
-                        @if(Request::is('branch'))
-                            {{ translate('Dashboard') }}
-                        @elseif(Request::is('branch/orders/*'))
-                            {{ translate('Orders') }}
-                        @elseif(Request::is('branch/pos') || Request::is('branch/pos/*'))
-                            {{ translate('POS') }}
-                        @elseif(Request::is('branch/table/order/*'))
-                            {{ translate('Table Orders') }}
-                        @elseif(Request::is('branch/product/list'))
-                            {{ translate('Products') }}
-                        @elseif(Request::is('branch/table/list') || Request::is('branch/table/index') || Request::is('branch/promotion/create'))
-                            {{ translate('Tables') }}
-                        @elseif(Request::is('branch/kitchen/list') || Request::is('branch/kitchen/add-new'))
-                            {{ translate('Chef') }}
-                        @endif
-                    </h2>
                 </div>
             </div>
             <div class="navbar-nav-wrap-content-right">
