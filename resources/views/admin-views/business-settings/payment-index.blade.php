@@ -53,7 +53,7 @@
                                 <div style="border-radius:8px;" class="form-group d-flex flex-row border m-3 py-1 px-3 align-items-center justify-content-between">
                                     <label style="color:#7E8299;" class="input-label" >{{translate('cash_on_delivery')}}</label>
                                     <label class="switcher">
-                                        <input id="" class="switcher_input" type="checkbox"  data-url="" onchange="status_change(this)">
+                                        <input class="switcher_input" name="status" type="checkbox" {{($config['status'] ?? 0) == 1 ? 'checked' : ''}} onchange="this.form.submit()">
                                         <span class="switcher_control"></span>
                                     </label>
                                 </div>
@@ -67,7 +67,7 @@
                                 <div style="border-radius:8px;" class="form-group d-flex flex-row border m-3 py-1 px-3 align-items-center justify-content-between">
                                     <label style="color:#7E8299;" class="input-label">{{translate('digital_payment')}}</label>
                                     <label class="switcher">
-                                        <input id="" class="switcher_input" type="checkbox"  data-url="" onchange="status_change(this)">
+                                        <input class="switcher_input" name="status" type="checkbox" {{($config['status'] ?? 0) == 1 ? 'checked' : ''}} onchange="this.form.submit()">
                                         <span class="switcher_control"></span>
                                     </label>
                                 </div>
