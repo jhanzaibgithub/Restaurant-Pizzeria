@@ -422,7 +422,7 @@ class POSController extends Controller
 
         $order_id = 100000 + $this->order->all()->count() + 1;
         if ($this->order->find($order_id)) {
-            $order_id = $this->order->orderBy('id', 'DESC')->first()->id + 1;
+            $order_id = ($this->order->max('id') ?? 0) + 1;
         }
 
         $order = $this->order;
@@ -747,6 +747,10 @@ class POSController extends Controller
         $order = $this->order->with(['details.product', 'customer', 'delivery_address'])
             ->where('id', $id)
             ->first();
+        if (!$order) {
+            Toastr::error(translate('Order not found!'));
+            return back();
+        }
 
         $addOns = $this->getOrderAddOns($order);
         $businessSettings = $this->businessSettings(['restaurant_name', 'address', 'phone', 'footer_text']);

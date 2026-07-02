@@ -365,7 +365,10 @@ class OrderController extends Controller
         $order_statistics_chart = $order_statistics_chart = array_slice($monthly_totals, 0, null, true);
 
        
-        $orders = $query->notPos()->latest()->paginate(Helpers::getPagination())->appends($query_param);
+        $orders = ($status == 'all' ? $query : $query->notPos())
+            ->latest()
+            ->paginate(Helpers::getPagination())
+            ->appends($query_param);
         $customers = $this->user->select('id', 'f_name', 'l_name')->whereNull('user_type')->get();
 
          // End new Dashboard

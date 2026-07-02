@@ -85,6 +85,11 @@ class TableController extends Controller
     public function status(Request $request): RedirectResponse
     {
         $table = $this->table->find($request->id);
+        if (!$table) {
+            Toastr::error(translate('Table not found!'));
+            return back();
+        }
+
         $table->is_active = $request->status;
         $table->save();
 
@@ -128,6 +133,11 @@ class TableController extends Controller
         ]);
 
         $table = $this->table->where(['id' => $id, 'branch_id' => auth('branch')->user()->id])->first();
+        if (!$table) {
+            Toastr::error(translate('Table not found!'));
+            return back();
+        }
+
         $table->group_id = $request->group_id;
         $table->number = $request->number;
         $table->capacity = $request->capacity;
@@ -144,6 +154,11 @@ class TableController extends Controller
     public function delete(Request $request): RedirectResponse
     {
         $table = $this->table->where(['id' => $request->id, 'branch_id' => auth('branch')->user()->id])->first();
+        if (!$table) {
+            Toastr::error(translate('Table not found!'));
+            return back();
+        }
+
         $table->delete();
 
         Toastr::success(translate('Table removed!'));

@@ -39,6 +39,10 @@ class CustomerWalletController extends Controller
 
         //user point check (if has sufficient amount)
         $user = $this->user->find($request->user()->id);
+        if (!$user) {
+            return response()->json(['errors' => [['code' => 'user', 'message' => translate('User not found!')]]], 404);
+        }
+
         if ($request['point'] > $user->point) {
             return response()->json(['errors' => [['code' => 'wallet', 'message' => translate('Your point in not sufficient!')]]], 401);
         }

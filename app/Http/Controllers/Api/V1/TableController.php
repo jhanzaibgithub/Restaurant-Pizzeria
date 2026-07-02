@@ -291,7 +291,7 @@ class TableController extends Controller
                 $this->order_detail->insert($order_d);
 
                 //update product popularity point
-                $this->product->find($c['product_id'])->increment('popularity_count');
+                $product?->increment('popularity_count');
             }
 
             //send notification to kitchen

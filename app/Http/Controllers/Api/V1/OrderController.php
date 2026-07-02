@@ -100,6 +100,13 @@ class OrderController extends Controller
         }
 
         $customer = $this->user->find($request->user()->id);
+        if (!$customer) {
+            return response()->json([
+                'errors' => [
+                    ['code' => 'user', 'message' => translate('User not found!')]
+                ]
+            ], 404);
+        }
 
         if ($request->payment_method == 'wallet_payment' && $customer->wallet_balance < $request['order_amount']) {
             return response()->json([
@@ -193,6 +200,13 @@ if (in_array($request->payment_method, ['stripe', 'online_payment'])) {
 
             foreach ($request['cart'] as $c) {
                 $product = $this->product->find($c['product_id']);
+                if (!$product) {
+                    return response()->json([
+                        'errors' => [
+                            ['code' => 'product', 'message' => translate('Product not found')]
+                        ]
+                    ], 404);
+                }
 
                 $branch_product = $this->product_by_branch->where(['product_id' => $c['product_id'], 'branch_id' => $request['branch_id']])->first();
 
@@ -237,6 +251,9 @@ if (in_array($request->payment_method, ['stripe', 'online_payment'])) {
 
                 foreach($c['add_on_ids'] as $key =>$id){
                     $addon = AddOn::find($id);
+                    if (!$addon) {
+                        continue;
+                    }
                     $add_on_prices[] = $addon['price'];
                     $add_on_taxes[] = ($addon['price']*$addon['tax'])/100;
                 }
@@ -275,7 +292,7 @@ if (in_array($request->payment_method, ['stripe', 'online_payment'])) {
                 $total_tax_amount += $or_d['tax_amount'] * $c['quantity'];
                 $this->order_detail->insert($or_d);
 
-                $this->product->find($c['product_id'])->increment('popularity_count');
+                $product->increment('popularity_count');
             }
 
             $or['total_tax_amount'] = $total_tax_amount ?? $request['total_tax_amount'];

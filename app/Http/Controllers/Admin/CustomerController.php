@@ -65,7 +65,7 @@ class CustomerController extends Controller
 
         if ($request->ajax()) {
             return response()->json([
-                'updated_point' => $this->customer->where(['id' => $id])->first()->point
+                'updated_point' => $this->customer->where(['id' => $id])->first()?->point ?? 0
             ]);
         }
     }
@@ -256,7 +256,13 @@ class CustomerController extends Controller
      */
     public function AddPoint(Request $request, $id): RedirectResponse
     {
-        $point = $this->customer->where(['id' => $id])->first()->point;
+        $customer = $this->customer->where(['id' => $id])->first();
+        if (!$customer) {
+            Toastr::error(translate('Customer not found!'));
+            return back();
+        }
+
+        $point = $customer->point;
 
         $requestPoint = $request['point'];
         $point += $requestPoint;

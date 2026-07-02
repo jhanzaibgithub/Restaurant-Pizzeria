@@ -59,6 +59,11 @@ class SystemController extends Controller
         ]);
 
         $admin = $this->admin->find(auth('admin')->id());
+        if (!$admin) {
+            Toastr::error(translate('Admin not found!'));
+            return back();
+        }
+
         $admin->f_name = $request->f_name;
         $admin->l_name = $request->l_name;
         $admin->email = $request->email;
@@ -81,6 +86,11 @@ class SystemController extends Controller
             'confirm_password' => 'required|same:password',
         ]);
         $admin = $this->admin->find(auth('admin')->id());
+        if (!$admin) {
+            Toastr::error(translate('Admin not found!'));
+            return back();
+        }
+
         $admin->password = bcrypt($request['password']);
         $admin->save();
 

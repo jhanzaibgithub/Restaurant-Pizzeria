@@ -25,7 +25,7 @@ class TableConfigController extends Controller
      */
     public function configuration(): JsonResponse
     {
-        $currency_symbol = $this->currency->where(['currency_code' => Helpers::currency_code()])->first()->currency_symbol;
+        $currency_symbol = $this->currency->where(['currency_code' => Helpers::currency_code()])->first()?->currency_symbol ?? '$';
 
         $branch_table = $this->branch
             ->with(['table' => function ($q) {

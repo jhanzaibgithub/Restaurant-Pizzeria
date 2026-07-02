@@ -12,9 +12,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+         require_once __DIR__ . '/GroupTableSeeder.php';
+
          $this->call([
              AdminTableSeeder::class,
              BranchTableSeeder::class,
+             GroupTableSeeder::class,
              CountriesTableSeeder::class
          ]);
 

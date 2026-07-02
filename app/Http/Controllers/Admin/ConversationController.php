@@ -116,6 +116,10 @@ class ConversationController extends Controller
     {
         try {
             $admin = $this->admin->find(auth('admin')->id());
+            if (!$admin) {
+                return response()->json(['message' => translate('Admin not found.')], 404);
+            }
+
             $admin->fcm_token = $request->fcm_token;
             $admin->save();
 

@@ -185,7 +185,7 @@ class POSController extends Controller
             // Generate Order ID
             $order_id = 100000 + $this->order->all()->count() + 1;
             if ($this->order->find($order_id)) {
-                $order_id = $this->order->orderBy('id', 'DESC')->first()->id + 1;
+                $order_id = ($this->order->max('id') ?? 0) + 1;
             }
 
             $order = $this->order;

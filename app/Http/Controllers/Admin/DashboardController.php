@@ -44,7 +44,11 @@ class DashboardController extends Controller
      */
     public function fcm($id): string
     {
-        $fcm_token = $this->admin->find(auth('admin')->id())->fcm_token;
+        $fcm_token = $this->admin->find(auth('admin')->id())?->fcm_token;
+        if (!$fcm_token) {
+            return "Admin FCM token not found";
+        }
+
         $data = [
             'title' => 'New auto generate message arrived from admin dashboard',
             'description' => $id,

@@ -285,6 +285,14 @@ class KitchenController extends Controller
     {
         $kitchen = $this->user->find(auth()->user()->id);
         $chef_branch = $this->chef_branch->where('user_id', auth()->user()->id)->first();
+        if (!$kitchen || !$chef_branch) {
+            return response()->json([
+                'errors' => [
+                    ['code' => 'Kitchen', 'message' => translate('Profile not found!')]
+                ]
+            ], 404);
+        }
+
         $branch = $this->branch->where('id', $chef_branch->branch_id)->first();
 
         return response()->json([

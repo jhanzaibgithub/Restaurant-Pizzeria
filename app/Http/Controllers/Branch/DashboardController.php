@@ -243,6 +243,10 @@ class DashboardController extends Controller
         ]);
 
         $branch = $this->branch->find(auth('branch')->id());
+        if (!$branch) {
+            Toastr::error(translate('Branch not found!'));
+            return back();
+        }
 
         if ($request->has('image')) {
             $image_name = Helpers::update('branch/', $branch->image, 'png', $request->file('image'));
@@ -271,6 +275,11 @@ class DashboardController extends Controller
         ]);
 
         $branch = $this->branch->find(auth('branch')->id());
+        if (!$branch) {
+            Toastr::error(translate('Branch not found!'));
+            return back();
+        }
+
         $branch->password = bcrypt($request['password']);
         $branch->save();
 

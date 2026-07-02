@@ -30,7 +30,7 @@ class AppActivation
             $software_id = $app_id;
         }
 
-        $activated_app = json_decode(BusinessSetting::where('key', 'app_activation')->first()->value ?? '[]');
+        $activated_app = json_decode(BusinessSetting::where('key', 'app_activation')->first()?->value ?? '[]');
         $found = 0;
         foreach ($activated_app as $key => $item) {
             if ($item->software_id == $software_id) {
