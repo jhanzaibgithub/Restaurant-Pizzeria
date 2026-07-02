@@ -1675,7 +1675,7 @@ class BusinessSettingsController extends Controller
 
 	 public function delivery_system(): Renderable
     {
-        $woltConfig = Helpers::get_business_settings('wolt_service');
+        $woltConfig = $this->defaultWoltConfig(Helpers::get_business_settings('wolt_service'));
 
         return view('admin-views.business-settings.delivery-system', compact('woltConfig'));
     }
@@ -1686,11 +1686,11 @@ class BusinessSettingsController extends Controller
             $this->business_setting->updateOrInsert(['key' => 'wolt_service'], [
                 'key' => 'wolt_service',
                 'value' => json_encode([
-                    'status' => $request['status'] == 'on' ? 1 : 0,
-                    'environment' => $request['environment'],
-                    'venue_id' => $request['venue_id'],
-                    'merchant_id' => $request['merchant_id'],
-                    'token' => $request['token'],
+                    'status' => $request->has('status') ? 1 : 0,
+                    'environment' => $request->input('environment', 'local'),
+                    'venue_id' => $request->input('venue_id', ''),
+                    'merchant_id' => $request->input('merchant_id', ''),
+                    'token' => $request->input('token', ''),
                 ]),
                 'updated_at' => now(),
             ]);
@@ -1698,6 +1698,17 @@ class BusinessSettingsController extends Controller
         }
 
         return back();
+    }
+
+    private function defaultWoltConfig($config): array
+    {
+        return array_merge([
+            'status' => 0,
+            'environment' => 'local',
+            'venue_id' => '',
+            'merchant_id' => '',
+            'token' => '',
+        ], is_array($config) ? $config : []);
     }
 
 }
