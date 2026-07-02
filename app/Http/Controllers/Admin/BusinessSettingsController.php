@@ -151,8 +151,14 @@ class BusinessSettingsController extends Controller
         ]);
 
         $curr_logo = $this->business_setting->where(['key' => 'logo'])->first();
+        $curr_fav_icon = $this->business_setting->where(['key' => 'fav_icon'])->first();
+
+        $logo_value = $request->hasFile('logo')
+            ? Helpers::update('restaurant/', $curr_logo?->value, 'png', $request->file('logo'))
+            : ($curr_logo?->value ?? null);
+
         $this->business_setting->updateOrInsert(['key' => 'logo'], [
-            'value' => $request->has('logo') ? Helpers::update('restaurant/', $curr_logo->value ?? null, 'png', $request->file('logo')) : ($curr_logo->value ?? null)
+            'value' => $logo_value,
         ]);
 
         $this->business_setting->updateOrInsert(['key' => 'phone'], [
@@ -207,9 +213,12 @@ class BusinessSettingsController extends Controller
             'value' => $request['time_format']
         ]);
 
-        $curr_fav_icon = $this->business_setting->where(['key' => 'fav_icon'])->first();
+        $fav_icon_value = $request->hasFile('fav_icon')
+            ? Helpers::update('restaurant/', $curr_fav_icon?->value, 'png', $request->file('fav_icon'))
+            : ($curr_fav_icon?->value ?? null);
+
         $this->business_setting->updateOrInsert(['key' => 'fav_icon'], [
-            'value' => $request->has('fav_icon') ? Helpers::update('restaurant/', $curr_fav_icon->value, 'png', $request->file('fav_icon')) : $curr_fav_icon->value
+            'value' => $fav_icon_value,
         ]);
 
         $this->business_setting->updateOrInsert(['key' => 'dm_self_registration'], [
