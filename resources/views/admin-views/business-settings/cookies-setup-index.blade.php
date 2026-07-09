@@ -11,7 +11,7 @@
     <div  class="row li_hr-sub border mb-5 px-2 py-3 mx-1">
         <div >
          <h3>
-            {{translate('business_setup')}}
+            {{-- {{translate('business_setup')}} --}}
          </h3>
         </div>
         <div>

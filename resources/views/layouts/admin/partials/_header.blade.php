@@ -206,6 +206,8 @@
                                         Promotion
                                         @elseif(Request::is('admin/report/earning') || Request::is('admin/report/sale-report') || Request::is('admin/report/order')|| Request::is('admin/report/product-report') || Request::is('admin/report/branch') || Request::is('admin/report/customer'))
                                             Report
+                                        @elseif(Request::is('admin/settings'))
+                                            Settings
                                         @elseif(Request::is('admin/business-settings/restaurant/*'))
                                             Settings
                                         @elseif(Request::is('admin/business-settings/page-setup/*'))
@@ -235,6 +237,8 @@
                                     Product
                                     @elseif( Request::is('admin/category/bulk-import') ||Request::is('admin/category/bulk-export')  || Request::is('admin/product/*'))
                                     BulkImport & Export
+                                    @elseif(Request::is('admin/settings'))
+                                    Profile Settings
                                     @elseif(Request::is('admin/business-settings/restaurant/*'))
                                     Business Setup
                                     @elseif(Request::is('admin/business-settings/page-setup/*'))
@@ -249,7 +253,7 @@
                         </li>
                         <li class="nav-item d-none d-sm-inline-block">
                                 <a class=" rounded-circle" href="javascript:void(0)">
-                                    @if(Request::is('admin/*'))
+                                    @if(Request::is('admin/*') && !Request::is('admin/settings'))
                                         <img src="{{asset('assets/admin/img/main_header_rightArrow.png')}}" alt="">
                                     @endif
                                     <span style="color:#3F4254;">
@@ -437,7 +441,7 @@
                                         </a>
                                         <ul class="dropdown-menu">
                                             @foreach($lang as $key =>$data)
-											
+
                                                 @if($data['status']==1)
                                                     <li>
                                                         <a class="dropdown-item pr-8 d-flex gap-2 align-items-center"

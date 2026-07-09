@@ -27,8 +27,8 @@
                         @if ($seededAdmin)
                             <div class="col-12"><small class="text-muted">A default admin was seeded from the database. Review the details above and enter a password only if you want to change it.</small></div>
                         @endif
-                        <div class="col-md-6"><label class="form-label">Password</label><input type="password" id="password" class="form-control" name="password" minlength="8" placeholder="Leave blank to keep current password"></div>
-                        <div class="col-md-6"><label class="form-label">Confirm Password</label><input type="password" id="password_confirmation" class="form-control" name="password_confirmation" minlength="8" ></div>
+                        <div class="col-md-6"><label class="form-label">Password</label><input type="password"  class="form-control" name="password" minlength="8" autocomplete="new-password" placeholder="Leave blank to keep current password"></div>
+                        <div class="col-md-6"><label class="form-label">Confirm Password</label><input type="password"  class="form-control" name="password_confirmation" minlength="8" autocomplete="new-password"></div>
                     </div>
                 </div>
 

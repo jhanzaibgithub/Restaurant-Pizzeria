@@ -102,6 +102,8 @@
                                     @if(Request::is('branch'))
                                         Dashboard
 
+                                    @elseif(Request::is('branch/settings'))
+                                        Settings
                                     @elseif(Request::is('branch/pos') || Request::is('branch/pos/*'))
                                         POS
 
@@ -131,6 +133,8 @@
                                         <strong>
                                         @if(Request::is('branch'))
                                             OverView
+                                        @elseif(Request::is('branch/settings'))
+                                            Profile Settings
                                   @elseif(Request::is('branch/pos'))
                                             New Sale
                                         @elseif(Request::is('branch/pos/*'))

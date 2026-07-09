@@ -48,7 +48,7 @@
                 <a class="menu-link" href="{{ route('admin.business-settings.web-app.third-party.social-media') }}">{{ translate('Social_Media') }}</a>
             </li>
             <li class="{{ Request::is('admin/business-settings/web-app/third-party*') ? 'active' : '' }}">
-                <a class="menu-link" href="{{ route('admin.business-settings.web-app.payment-method') }}">{{ translate('3rd_Party') }}</a>
+                <a class="menu-link" href="{{ route('admin.business-settings.web-app.payment-method') }}"> {{ translate('3rd_party') }}</a>
             </li>
             <li class="{{ Request::is('admin/business-settings/web-app/delivery-system*') ? 'active' : '' }}">
                 <a class="menu-link" href="{{ route('admin.business-settings.web-app.delivery-system') }}">{{ translate('Delivery System') }}</a>
